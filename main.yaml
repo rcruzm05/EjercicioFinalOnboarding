@@ -1,0 +1,38 @@
+--- 
+- name: Ejerciciodia4 
+  hosts: localhost 
+  connection: local 
+  gather_facts: false
+  become: yes 
+
+  tasks: 
+   - name: Verify the state of services in localhost
+     ansible.builtin.service_facts:
+     register: service_facts 
+
+   - name: Print the state of services in localhost 
+     ansible.builtin.debug: 
+       msg: "{{ service_facts }}"
+
+   - name: Start services 
+     ansible.builtin.service: 
+       name: cron
+       state: started 
+
+   - name: Restart services 
+     ansible.builtin.service: 
+      name: postgresql
+      state: restarted
+
+   - name: Stop services 
+     ansible.builtin.service: 
+      name: cron
+      state: stopped
+
+   - name: Start all services 
+     ansible.builtin.service: 
+       name: "{{ item }}"
+       state: started
+     loop: "{{ ansible_facts.services | dict2items 
+             | selectattr('value.state', 'equalto', 'stopped') 
+             | map(attribute='key') | list }}"
