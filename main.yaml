@@ -3,7 +3,7 @@
   hosts: localhost 
   connection: local 
   gather_facts: true
-  become: yes 
+  become: no 
 
   tasks: 
    - name: Verify the state of services in localhost
