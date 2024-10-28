@@ -5,7 +5,7 @@
   gather_facts: true
   tasks:
     - name: Imprimir facts existentes
-      debug:
+      ansible.builtin.debug:
         msg: "{{ item }}: {{ ansible_facts[item] }}"
       loop:
         - hostname
