@@ -12,4 +12,6 @@
         - ansible_os_family
         - ansible_distribution
         - ansible_version.full
+        - ansible_processor_cores
+        - ansible_memtotal_mb
       when: ansible_facts[item] is defined
